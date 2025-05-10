@@ -3,7 +3,6 @@ from keras import layers
 from art import text2art
 import tensorflow as tf
 import numpy as np
-import shutil
 import socket
 import sys
 
@@ -126,18 +125,21 @@ def print_results(pred_main, pred_bonus):
     print("\033[1;36m" + "=" * 60 + "\033[0m")
     print("\033[1;32m" + "🎯 PREDICTED NUMBERS 🎯".center(60) + "\033[0m")
     print("\033[1;36m" + "-" * 60 + "\033[0m")
+
     if pred_main.shape[0] > 0:
         main_nums = ', '.join(map(str, np.sort(pred_main[0])))
         print(f"\033[1;33mMain Numbers:\033[0m \033[1;37m{main_nums}\033[0m")
         print(f"\033[1;33mBonus Number:\033[0m \033[1;37m{pred_bonus[0]}\033[0m")
     else:
         print("\033[1;31mNo predictions available\033[0m")
+
     print("\033[1;36m" + "=" * 60 + "\033[0m")
 
 # === Ejecución Principal ===
 def main():
     print("\x1b[H\x1b[2J\x1b[3J")  # Limpia la consola
     print_intro()
+
     try:
         (x_train, y_train_main, y_train_bonus), (x_val, y_val_main, y_val_bonus) = load_data()
         model = create_model()
